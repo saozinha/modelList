@@ -24,10 +24,6 @@ public class ListaVinculada {
 		}
 	}
 
-	public Object getElemento(int posicao) {
-		return null;
-	}
-
 	public int tamanho() {
 		return totalDeElementos;
 	}
@@ -64,53 +60,60 @@ public class ListaVinculada {
 		this.totalDeElementos++;
 	}
 
-	public void removeDoComeco(Object elemento) {
+	public boolean removeDoComeco(Object elemento) {
 
-		if (contem(elemento)) {
+		if (this.totalDeElementos > 0 && contem(elemento)) {
 			this.primeira = this.primeira.getProxima();
 			this.totalDeElementos--;
 
-			if (this.totalDeElementos == 0) {
+			if (this.totalDeElementos == 0) { 
 				this.ultima = null;
 			}
-			System.out.println(" Elemento Removido ! ");
+			System.out.println("\n Elemento - "+elemento +" Removido do começo ! ");
+			return true;
 		} else {
-			throw new IllegalArgumentException("Elemento não existe");
+			// throw new IllegalArgumentException("Elemento não existe");
+			return false;
 		}
 
 	}
 
-	public void removeDoFim(Object elemento) {
-		if (contem(elemento)) {
+	public boolean removeDoFim(Object elemento) {
+		if (this.totalDeElementos > 0 && contem(elemento)) {
 			if (this.totalDeElementos == 1) {
 				this.removeDoComeco(elemento);
 			} else {
 				this.ultima = primeira;
 				this.totalDeElementos--;
 			}
+			System.out.println("\n Elemento - "+elemento +" Removido do fim ! ");
+			return true;
 		} else {
-			throw new IllegalArgumentException("Elemento não existe");
+			// throw new IllegalArgumentException("Elemento não existe");
+			return false;
 		}
 	}
 
 	public String mostraLista() {
 
 		if (this.tamanho() > 0) {
-			
+
 			StringBuilder builder = new StringBuilder("[");
 			Celula atual = primeira;
 
-			while (atual != null) {
-				builder.append(atual.getElemento());
-				builder.append(", ");
-				atual = atual.getProxima();
-			}
+			while (atual != null) { 
+				
+				if(atual  != null) { 
+					// último elemento
+					builder.append(atual.getElemento());
+				}
+				atual = atual.getProxima(); 
+				builder.append(" , ");
 
-			// último elemento
-			builder.append(atual.getElemento());
+			}
 			builder.append("]");
-			
-			System.out.println(builder.toString());
+
+			System.out.println("\n " + builder.toString());
 
 			return builder.toString();
 		} else {
